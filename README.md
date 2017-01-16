@@ -12,7 +12,9 @@ SteamVRInputObservables.unitypackageをプロジェクトにインポートし�
 1. 管理用のPrefab `SteamVRInputObservables/Resouces/SteamVREventTrigger` をシーンに配置して下さい
 2. `SteamVREventTrigger`のInspectorViewより、`Left Controller`と`Right Controller`を設定して下さい
 ![InspectorView](https://raw.githubusercontent.com/TORISOUP/SteamVRInputObservables/master/images/inscpector.png)
-3. あとはObservableTriggerと同様に、this.xxxAsObservableでストリームを取得することができます。
+3. `ObservableSteamInput.XXXXX` または `this.XXXXAsObservable()` の形式でストリームを取得できるようになります
+`ObservableSteamInput.XXX`の方はControllerが破棄されない限りOnCompletedは発行されません
+`this.XXXXAsObservable()`の方はthisが指すコンポーネントが破棄されると自動でOnCompletedを発行します
 
 ```csharp
 using SteamVRInputObservables;
@@ -22,6 +24,29 @@ using UnityEngine;
 namespace SteamVRInputObservablesSample
 {
     public class InputTest : MonoBehaviour
+    {
+        void Start()
+        {
+            ObservableSteamInput.OnRightTouchPadTouchDown()
+                .Subscribe(_ => Debug.Log("OnRightTouchPadTouchDown"))
+                .AddTo(this);
+
+            this.OnRightTouchPadTouchDownAsObservable()
+                .Subscribe(_ => Debug.Log("OnRightTouchPadTouchDown"));
+        }
+
+    }
+}
+```
+
+```csharp
+using SteamVRInputObservables;
+using UniRx;
+using UnityEngine;
+
+namespace SteamVRInputObservablesSample
+{
+    public class InputTest2 : MonoBehaviour
     {
         void Start()
         {
