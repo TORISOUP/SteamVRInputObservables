@@ -92,7 +92,10 @@ namespace SteamVRInputObservables
             if (_onTouchUp != null) _onTouchUp.OnCompleted();
             if (_onPressUp != null) _onPressUp.OnCompleted();
             if (_onPressDown != null) _onPressDown.OnCompleted();
+            if (_onPress != null) _onPress.Dispose();
+            if (_onTouch != null) _onTouch.Dispose();
         }
+
 
     }
 }
