@@ -69,7 +69,7 @@ namespace SteamVRInputObservables
                 _onTouchDown.OnNext(Unit.Default);
             }
 
-            if (_onTouchUp != null && Device.GetTouchDown(ButtonMask))
+            if (_onTouchUp != null && Device.GetTouchUp(ButtonMask))
             {
                 _onTouchUp.OnNext(Unit.Default);
             }
